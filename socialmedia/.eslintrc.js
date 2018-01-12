@@ -22,6 +22,8 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // semicolons
-    'semi': [2, 'always', { "omitLastInOneLineBlock": true}],
+    'semi': ['error', 'always', {'omitLastInOneLineBlock': true}],
+    // allow multiple empty lines
+    'no-multiple-empty-lines': ['error', {'max': 2}],
   }
 }
