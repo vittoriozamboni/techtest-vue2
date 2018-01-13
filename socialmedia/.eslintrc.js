@@ -10,7 +10,7 @@ module.exports = {
     browser: true,
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
-  extends: 'standard',
+  extends: ['vue'],
   // required to lint *.vue files
   plugins: [
     'html'
@@ -22,8 +22,16 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // semicolons
-    'semi': ['error', 'always', {'omitLastInOneLineBlock': true}],
+    'semi': ['warn', 'always', {'omitLastInOneLineBlock': true}],
     // allow multiple empty lines
     'no-multiple-empty-lines': ['error', {'max': 2}],
+    // indentation
+    'indent': ['warn', 2],
+    // comma allowed if parenthesis is on a new line
+    'comma-dangle': ['error', 'only-multiline'],
+
+    // VUE
+    // force kebab case (my-component)
+    'vue/name-property-casing': ['error', 'kebab-case'],
   }
 }
