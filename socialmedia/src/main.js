@@ -15,6 +15,8 @@ import App from './components/App';
 Vue.use(VueResource);
 Vue.config.productionTip = false;
 
+Vue.http.options.root = 'http://localhost:8000/social-media/api/';
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -23,3 +25,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 });
+

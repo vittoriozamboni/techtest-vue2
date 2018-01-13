@@ -39,5 +39,6 @@ export default {
 <style lang="scss">
 .application-status-label {
   text-transform: capitalize;
+  min-width: 100px;
 }
 </style>

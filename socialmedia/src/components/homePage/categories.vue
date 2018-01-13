@@ -1,9 +1,7 @@
 <template>
   <div class="tile is-ancestor">
-    <div class="tile is-parent">      
-      <category v-for="category in categories" :category="category" :key="category.id"></category>
-    </div>
-  </div>    
+    <category v-for="category in categories" :category="category" :key="category.id"></category>
+  </div>
 </template>
 
 <script>
