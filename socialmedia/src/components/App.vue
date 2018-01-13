@@ -10,8 +10,8 @@
 
 <script>
 
-import appNavbar from './appNavbar.vue';
-import appFooter from './appFooter.vue';
+import appNavbar from './scaffold/appNavbar.vue';
+import appFooter from './scaffold/appFooter.vue';
 
 export default {
   name: 'app',

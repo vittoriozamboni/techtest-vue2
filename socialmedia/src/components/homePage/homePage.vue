@@ -33,13 +33,16 @@ export default {
       const store = this.$store;
 
       store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
-      this.$http.get('category/').then(response => {
+      this.$http.get('category/', { timeout: 5000 }).then(response => {
         console.log(response);
         store.dispatch(DATA_SET_CATEGORIES, { data: response.body });
-      }, response => {
-
-      }).finally(() => {
         store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
+      }, response => {
+        if (response.ok === false && response.body === '') {
+          // assuming timeout
+          store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
+        }
+        console.error('Impossible to load data: ', response);
       });
     }
   }
