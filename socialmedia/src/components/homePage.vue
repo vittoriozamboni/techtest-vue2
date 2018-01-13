@@ -1,6 +1,7 @@
 <template>
   <div class="homepage">
     <h2 class="welcome-title">{{ msg }}</h2>
+    There {{ categoriesCount === 1 ? 'is' : 'are' }} {{ categoriesCount }} categor{{ categoriesCount === 1 ? 'y' : 'ies' }} loaded.
   </div>
 </template>
 
@@ -11,6 +12,9 @@ export default {
     return {
       msg: 'Welcome to Your Vue.js App'
     };
+  },
+  computed: {
+    categoriesCount: function () { return this.$store.getters.categoriesCount },
   }
 };
 </script>
