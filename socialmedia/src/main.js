@@ -7,7 +7,6 @@ import store from './store';
 
 /* Styles */
 import 'bulma/css/bulma.css';
-import './assets/styles/bulmaCustomizations.scss';
 import './assets/styles/socialmedia.scss';
 
 import App from './components/App';

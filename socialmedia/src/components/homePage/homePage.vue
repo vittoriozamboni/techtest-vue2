@@ -5,7 +5,7 @@
     <section class="section">
       <div class="container">
         <h3>There {{ categoriesCount === 1 ? 'is' : 'are' }} {{ categoriesCount }} categor{{ categoriesCount === 1 ? 'y' : 'ies' }} loaded.</h3>
-        <categories/>
+        <home-page-categories/>
       </div>
     </section>
   </div>
@@ -15,12 +15,12 @@
 
 import { APPLICATION_SET_STATUS, DATA_SET_CATEGORIES } from '@/store/actionTypes';
 
-import categories from './categories';
+import homePageCategories from './homePageCategories';
 
 export default {
   name: 'home-page',
   components: {
-    categories
+    homePageCategories
   },
   created () {
     this.fetchData();

@@ -1,16 +1,16 @@
 <template>
   <div class="tile is-ancestor">
-    <category v-for="category in categories" :category="category" :key="category.id"></category>
+    <home-page-category v-for="category in categories" :category="category" :key="category.id"></home-page-category>
   </div>
 </template>
 
 <script>
-import category from './category';
+import homePageCategory from './homePageCategory';
 
 export default {
-  name: 'categories',
+  name: 'home-page-categories',
   components: {
-    category
+    homePageCategory
   },
   computed: {
     categories: function () {

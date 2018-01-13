@@ -10,7 +10,7 @@
 <script>
 
 export default {
-  name: 'category',
+  name: 'home-page-category',
   props: ['category']
 };
 

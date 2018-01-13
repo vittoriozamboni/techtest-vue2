@@ -10,7 +10,7 @@ import actions from './actions';
 const store = new Vuex.Store({
   state: {
     applicationStatus: 'not-loaded', // not-loaded, loading, loaded
-    categories: [],
+    categories: null,
   },
   getters,
   mutations,

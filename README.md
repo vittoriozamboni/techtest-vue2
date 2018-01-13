@@ -27,6 +27,7 @@ The application is divided into components, that are called by the main ``App.vu
 |   |   | - App.vue
 |   |   | - scaffold: contains scaffolding
 |   |   | - homePage: home page and loads of initial data
+|   |   | - categories: administration of categories
 |   | - router: rounter initialization with app paths
 |   | - store: initial state and all methods
 ```
