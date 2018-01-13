@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 import getters from './getters';
+import mutations from './mutations';
 
 const store = new Vuex.Store({
   state: {
@@ -13,11 +14,7 @@ const store = new Vuex.Store({
     ],
   },
   getters,
-  mutations: {
-    setApplicationStatus (state, status) {
-      state.applicationStatus = status;
-    }
-  }
+  mutations,
 });
 
 export default store;
