@@ -1,12 +1,12 @@
 <template>
-  <div class="hello">
-    <h2>{{ msg }}</h2>
+  <div class="homepage">
+    <h2 class="welcome-title">{{ msg }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'homePage',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
@@ -14,3 +14,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+.homepage {
+  .welcome-title {
+    text-align: center;
+  }
+}
+</style>

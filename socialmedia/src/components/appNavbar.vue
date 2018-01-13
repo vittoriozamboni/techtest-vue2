@@ -2,7 +2,7 @@
   <nav class="navbar is-transparent">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <img src="../assets/logo.png" alt="Social Media Manager made with VUE" width="112" height="28">
+        <img src="../assets/images/logo.png" alt="Social Media Manager made with VUE" width="112" height="28">
       </a>
       <div class="navbar-burger burger" data-target="navbarTransparent">
         <span></span>
@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'appNavbar',
+  name: 'app-navbar',
   data () {
     return {};
   }
