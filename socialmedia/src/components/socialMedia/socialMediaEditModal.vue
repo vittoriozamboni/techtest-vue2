@@ -61,7 +61,7 @@ export default {
     },
     saveEntry: function () {
       const entity = new EntityClass({ vm: this });
-      entity.save(this.formEntry, response => {
+      return entity.save(this.formEntry).then(response => {
         this.hideModal(true);
       }, response => {
         this.hideModal();

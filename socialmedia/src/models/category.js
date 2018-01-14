@@ -18,11 +18,11 @@ export class CategoryEntity extends BaseEntity {
     };
   }
 
-  fetch (options, resolve, reject) {
-    super.fetch({
+  fetch (options) {
+    return super.fetch({
       actionSet: DATA_SET_CATEGORIES,
       ...options
-    }, resolve, reject);
+    });
   }
 
 };

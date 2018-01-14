@@ -20,11 +20,11 @@ export class SocialMediaOwnerEntity extends BaseEntity {
     };
   }
 
-  fetch (options, resolve, reject) {
-    super.fetch({
+  fetch (options) {
+    return super.fetch({
       actionSet: DATA_SET_SOCIAL_MEDIA_OWNERS,
       ...options
-    }, resolve, reject);
+    });
   }
 
 };

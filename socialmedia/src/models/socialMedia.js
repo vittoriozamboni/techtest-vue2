@@ -23,19 +23,19 @@ export class SocialMediaEntity extends BaseEntity {
     };
   }
 
-  fetchData (options, resolve, reject) {
-    super.fetch({
+  fetchData (options) {
+    return super.fetch({
       actionSet: DATA_SET_SOCIAL_MEDIA,
       ...options
-    }, resolve, reject);
+    });
   }
 
-  fetch (options, resolve, reject) {
+  fetch (options) {
     if (store.state.socialMediaOwners === null) {
       const socialMediaOwners = new SocialMediaOwnerEntity({ vm: this.vm });
-      socialMediaOwners.fetch(options, () => this.fetchData(options, resolve, reject), reject);
+      return socialMediaOwners.fetch(options).then(() => this.fetchData(options));
     } else {
-      this.fetchData(options, resolve, reject);
+      return this.fetchData(options);
     }
   }
 
