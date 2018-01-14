@@ -26,7 +26,7 @@ module.exports = {
     // allow multiple empty lines
     'no-multiple-empty-lines': ['error', {'max': 2}],
     // indentation
-    'indent': ['warn', 2],
+    'indent': ['warn', 2, {'SwitchCase': 1}],
     // comma allowed if parenthesis is on a new line
     'comma-dangle': ['error', 'only-multiline'],
 

@@ -13,7 +13,7 @@
 
 <script>
 
-import { APPLICATION_SET_STATUS, DATA_SET_CATEGORIES } from '@/store/actionTypes';
+import CategoryEntity from '@/models/category';
 
 import homePageCategories from './homePageCategories';
 
@@ -32,20 +32,8 @@ export default {
   },
   methods: {
     fetchData () {
-      const store = this.$store;
-
-      store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
-      this.$http.get('category/', { timeout: 5000 }).then(response => {
-        console.log(response);
-        store.dispatch(DATA_SET_CATEGORIES, { data: response.body });
-        store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
-      }, response => {
-        if (response.ok === false && response.body === '') {
-          // assuming timeout
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
-        }
-        console.error('Impossible to load data: ', response);
-      });
+      const Category = new CategoryEntity({ vm: this });
+      Category.fetch();
     }
   }
 };

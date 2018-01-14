@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import { APPLICATION_SET_STATUS } from '@/store/actionTypes';
 
+import CategoryEntity from '@/models/category';
 import Modal from '@/components/modal';
 
 export default {
@@ -35,16 +35,11 @@ export default {
       this.$emit('hideCategoryDeleteConfirmModal', { fetchData });
     },
     deleteCategoryConfirm: function () {
-      const category = Object.assign({}, this.categoryEdit);
-      const store = this.$store;
+      const Category = new CategoryEntity({ vm: this });
 
-      store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
-
-      this.$http.delete(`category/${category.id}/`).then(response => {
-        store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
+      Category.delete(this.categoryEdit.id, response => {
         this.hideModal(true);
       }, response => {
-        store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
         this.hideModal();
       });
     },

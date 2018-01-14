@@ -34,8 +34,7 @@
 
 <script>
 
-import { APPLICATION_SET_STATUS } from '@/store/actionTypes';
-
+import CategoryEntity from '@/models/category';
 import Modal from '@/components/modal';
 
 
@@ -54,30 +53,13 @@ export default {
       this.$emit('hideCategoryModal', { fetchData });
     },
     saveCategory: function () {
-      const category = Object.assign({}, this.categoryEdit);
-      const store = this.$store;
+      const Category = new CategoryEntity({ vm: this });
 
-      store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
-
-      if (category.id) {
-        // EDIT
-        this.$http.put(`category/${category.id}/`, category).then(response => {
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
-          this.hideModal(true);
-        }, response => {
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
-          this.hideModal();
-        });
-      } else {
-        // ADD
-        this.$http.post('category/', category).then(response => {
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
-          this.hideModal(true);
-        }, response => {
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
-          this.hideModal();
-        });
-      }
+      Category.save(this.categoryEdit, response => {
+        this.hideModal(true);
+      }, response => {
+        this.hideModal();
+      });
     },
 
   }

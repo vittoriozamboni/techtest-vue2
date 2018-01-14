@@ -58,8 +58,7 @@
 
 <script>
 
-import { APPLICATION_SET_STATUS, DATA_SET_CATEGORIES } from '@/store/actionTypes';
-
+import CategoryEntity from '@/models/category';
 import categoryEditModal from './categoryEditModal';
 import categoryDeleteModal from './categoryDeleteModal';
 
@@ -91,19 +90,9 @@ export default {
   },
   methods: {
     fetchData () {
-      const store = this.$store;
+      const Category = new CategoryEntity({ vm: this });
 
-      store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
-      this.$http.get('category/', { timeout: 5000 }).then(response => {
-        store.dispatch(DATA_SET_CATEGORIES, { data: response.body });
-        store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
-      }, response => {
-        if (response.ok === false && response.body === '') {
-          // assuming timeout
-          store.dispatch(APPLICATION_SET_STATUS, { status: 'not-loaded' });
-        }
-        console.error('Impossible to load data: ', response);
-      });
+      Category.fetch();
     },
     // ADD / EDIT
     addCategory: function () {
