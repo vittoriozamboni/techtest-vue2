@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar is-white">
     <div class="navbar-brand">
-      <a class="navbar-item" href="/">
+      <router-link class="navbar-item" to="/">
         <img src="../../assets/images/logo.png" alt="Social Media Manager made with VUE" width="112" height="28">
-      </a>
+      </router-link>
       <div class="navbar-burger burger" data-target="navbar">
         <span></span>
         <span></span>
@@ -13,9 +13,7 @@
 
     <div id="navbar" class="navbar-menu">
       <div class="navbar-start">
-        <a class="navbar-item" href="/">
-          Home
-        </a>
+        <router-link class="navbar-item" to="/">Home</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="/">
             Sections

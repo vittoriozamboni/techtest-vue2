@@ -11,7 +11,7 @@
           Modal body
         </slot>
       </section>
-      <footer class="modal-card-foot">
+      <footer v-if="showFooter" class="modal-card-foot">
         <slot name="footer">
           Modal footer
         </slot>
@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<<script>
+<script>
 export default {
   name: 'modal',
   props: {
@@ -29,6 +29,10 @@ export default {
       default: false
     },
     showClose: {
+      type: Boolean,
+      default: true
+    },
+    showFooter: {
       type: Boolean,
       default: true
     },
@@ -42,7 +46,6 @@ export default {
   },
   methods: {
     closeModal: function () {
-      console.log('closeModal');
       this.$emit('closeModal');
       this.onClose();
     }

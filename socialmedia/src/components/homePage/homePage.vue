@@ -23,7 +23,9 @@ export default {
     homePageCategories
   },
   created () {
-    this.fetchData();
+    if (this.$store.state.categories === null) {
+      this.fetchData();
+    }
   },
   computed: {
     categoriesCount: function () { return this.$store.getters.categoriesCount },

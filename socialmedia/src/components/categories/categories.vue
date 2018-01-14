@@ -81,7 +81,9 @@ export default {
     categoryDeleteModal,
   },
   created () {
-    this.fetchData();
+    if (this.$store.state.categories === null) {
+      this.fetchData();
+    }
   },
   computed: {
     categories: function () { return this.$store.state.categories },
