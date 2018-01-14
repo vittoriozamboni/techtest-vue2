@@ -45,7 +45,7 @@ export default {
       this.$emit('hideEntryFormModal', { fetchData });
     },
     saveEntry: function () {
-      const entity = new EntityClass({ vm: this });
+      const entity = new EntityClass();
       return entity.save(this.formEntry).then(response => {
         this.hideModal(true);
       }, response => {

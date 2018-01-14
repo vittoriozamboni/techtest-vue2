@@ -12,6 +12,9 @@ export default {
   [actionTypes.DATA_SET_CONTENT_TYPES]: function ({ commit }, payload) {
     commit(mutationTypes.DATA_SET_CONTENT_TYPES, payload);
   },
+  [actionTypes.DATA_SET_POSTS]: function ({ commit }, payload) {
+    commit(mutationTypes.DATA_SET_POSTS, payload);
+  },
   [actionTypes.DATA_SET_SOCIAL_MEDIA]: function ({ commit }, payload) {
     commit(mutationTypes.DATA_SET_SOCIAL_MEDIA, payload);
   },

@@ -39,7 +39,7 @@ export default {
       this.$emit('hideEntryDeleteConfirmModal', { fetchData });
     },
     deleteEntryConfirm: function () {
-      const entity = new EntityClass({ vm: this });
+      const entity = new EntityClass();
 
       return entity.delete(this.formEntry.id).then(response => {
         this.hideModal(true);

@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import homePage from '@/components/homePage/homePage';
 import Categories from '@/components/categories/categories';
 import ContentTypes from '@/components/contentTypes/contentTypes';
+import Posts from '@/components/posts/posts';
 import SocialMedia from '@/components/socialMedia/socialMedia';
 import SocialMediaOwners from '@/components/socialMediaOwners/socialMediaOwners';
 import Users from '@/components/users/users';
@@ -25,6 +26,11 @@ export default new Router({
       path: '/content-types',
       name: 'contentTypes',
       component: ContentTypes
+    },
+    {
+      path: '/posts',
+      name: 'posts',
+      component: Posts
     },
     {
       path: '/social-media',

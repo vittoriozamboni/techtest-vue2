@@ -31,12 +31,14 @@ export class SocialMediaEntity extends BaseEntity {
   }
 
   fetch (options) {
+    const dependencies = [];
     if (store.state.socialMediaOwners === null) {
-      const socialMediaOwners = new SocialMediaOwnerEntity({ vm: this.vm });
-      return socialMediaOwners.fetch(options).then(() => this.fetchData(options));
-    } else {
-      return this.fetchData(options);
+      const socialMediaOwner = new SocialMediaOwnerEntity({ vm: this.vm });
+      dependencies.push(socialMediaOwner.fetch({ keepLoading: true, ...options }));
     }
+    return Promise.all(dependencies).then(response => {
+      this.fetchData(options);
+    });
   }
 
 };

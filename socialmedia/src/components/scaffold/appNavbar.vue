@@ -21,6 +21,7 @@
           <div class="navbar-dropdown">
             <router-link class="navbar-item" to="/categories">Categories</router-link>
             <router-link class="navbar-item" to="/content-types">Content Types</router-link>
+            <router-link class="navbar-item" to="/posts">Posts</router-link>
             <router-link class="navbar-item" to="/social-media">Social Media</router-link>
             <router-link class="navbar-item" to="/social-media-owners">Social Media Owners</router-link>
             <router-link class="navbar-item" to="/users">Users</router-link>

@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const entity = new EntityClass({ vm: this });
+      const entity = new EntityClass();
       return entity.fetch();
     },
     // ADD / EDIT

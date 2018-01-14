@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <page-header title="Social Media">
+    <page-header title="Posts">
       <div slot="actions">
         <a class="button is-small is-success" @click="addEntry()">
           <span class="icon"><i class="fa fa-plus"></i></span>
@@ -13,23 +13,30 @@
       <thead>
         <tr>
           <th>ID</th>
-          <th>Name</th>
-          <th>Website</th>
-          <th>Owner</th>
+          <th>Title</th>
+          <th>Created By</th>
           <th></th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="entry in entries" :key="entry.id">
           <td>{{ entry.id }}</td>
-          <td>{{ entry.name }}</td>
-          <td>{{ entry.website }}</td>
-          <td>{{ entry._display.owner }}</td>
+          <td>{{ entry.title }}</td>
+          <td>{{ entry._display.created_by }}</td>
           <td>
-            <a class="button is-small is-primary is-outlined" @click="editEntry(entry)">
+            <a class="button is-small is-link is-outlined"
+              @click="viewDetailsEntry(entry)"
+            >
+              <i class="fa fa-file-text-o"></i>
+            </a>
+            <a class="button is-small is-primary is-outlined"
+              @click="editEntry(entry)"
+            >
               <i class="fa fa-edit"></i>
             </a>
-            <a class="button is-small is-danger is-outlined" @click="deleteEntry(entry)">
+            <a class="button is-small is-danger is-outlined"
+              @click="deleteEntry(entry)"
+            >
               <i class="fa fa-times"></i>
             </a>
           </td>
@@ -39,52 +46,61 @@
 
     <p>{{ entriesCount }} total entries</p>
 
-    <social-media-edit-modal
+    <post-edit-modal
       v-bind:entryModalFormVisible="entryModalFormVisible"
       v-bind:formEntry="formEntry"
       v-on:hideEntryFormModal="hideEntryFormModal"
-    ></social-media-edit-modal>
+    ></post-edit-modal>
 
-    <social-media-delete-modal
+    <post-delete-modal
       v-bind:entryModalDeleteConfirmVisible="entryModalDeleteConfirmVisible"
       v-bind:formEntry="formEntry"
       v-on:hideEntryDeleteConfirmModal="hideEntryDeleteConfirmModal"
-    ></social-media-delete-modal>
+    ></post-delete-modal>
+
+    <post-details-modal
+      v-bind:entryModalDetailsVisible="entryModalDetailsVisible"
+      v-bind:detailsEntry="detailsEntry"
+      v-on:hideEntryDetailsModal="hideEntryDetailsModal"
+    ></post-details-modal>
 
   </div>
 </template>
 
 <script>
 
-
-import { SocialMediaEntity as EntityClass } from '@/models/socialMedia';
+import { PostEntity as EntityClass } from '@/models/post';
 import pageHeader from '@/components/administration/pageHeader';
 import { FormUtils } from '@/components/administration/utils';
 
-import socialMediaEditModal from './socialMediaEditModal';
-import socialMediaDeleteModal from './socialMediaDeleteModal';
+import postEditModal from './postEditModal';
+import postDeleteModal from './postDeleteModal';
+import postDetailsModal from './postDetailsModal';
 
 export default {
-  name: 'social-media',
+  name: 'posts',
   data () {
     return {
       entryModalFormVisible: false,
       entryModalDeleteConfirmVisible: false,
+      entryModalDetailsVisible: false,
       formEntry: () => {},
+      detailsEntry: () => {},
     };
   },
   components: {
     pageHeader,
-    socialMediaEditModal,
-    socialMediaDeleteModal
+    postEditModal,
+    postDeleteModal,
+    postDetailsModal,
   },
   created () {
-    if (this.$store.state.socialMedia === null) {
+    if (this.$store.state.posts === null) {
       this.fetchData();
     }
   },
   computed: {
-    entries: function () { return this.$store.state.socialMedia },
+    entries: function () { return this.$store.state.posts },
     entriesCount: function () { return this.entries ? this.entries.length : 0 },
   },
   methods: {
@@ -97,7 +113,10 @@ export default {
       this.editEntry();
     },
     editEntry: function (entry) {
-      FormUtils.editEntry(this, { entry, emptyEntry: EntityClass.emptyEntry() });
+      FormUtils.editEntry(this, {
+        entry: entry,
+        emptyEntry: EntityClass.emptyEntry()
+      });
       this.entryModalFormVisible = true;
     },
     hideEntryFormModal: function ({ fetchData }) {
@@ -112,7 +131,26 @@ export default {
     hideEntryDeleteConfirmModal: function ({ fetchData }) {
       this.entryModalDeleteConfirmVisible = false;
       FormUtils.closeModalForm(this, { fetchData });
+    },
+    // DETAILS
+    viewDetailsEntry: function (entry) {
+      this.entryModalDetailsVisible = true;
+      this.detailsEntry = Object.assign({}, entry);
+    },
+    hideEntryDetailsModal: function () {
+      this.entryModalDetailsVisible = false;
+      this.detailsEntry = null;
     }
   }
 };
 </script>
+
+<style lang="scss">
+  .table-admin {
+    thead {
+      th:last-of-type {
+        width: 150px;
+      }
+    }
+  }
+</style>

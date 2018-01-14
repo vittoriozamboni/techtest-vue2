@@ -1,13 +1,13 @@
 <template>
-  <modal class="modal user-delete-confirm"
+  <modal class="modal post-delete-confirm"
     v-bind:show="entryModalDeleteConfirmVisible"
     v-on:closeModal="hideModal"
   >
-    <h1 slot="title">Delete User</h1>
+    <h1 slot="title">Delete Post</h1>
     <div slot="body">
       <article class="message is-danger">
         <div class="message-body">
-          <p>Are you sure to delete the user "{{ formEntry.full_name }}"?</p>
+          <p>Are you sure to delete the post "{{ formEntry.title }}"?</p>
           <p class="is-size-7">This operation can't be undone.</p>
         </div>
       </article>
@@ -21,11 +21,11 @@
 
 <script>
 
-import { UserEntity as EntityClass } from '@/models/user';
+import { PostEntity as EntityClass } from '@/models/post';
 import Modal from '@/components/modal';
 
 export default {
-  name: 'user-delete-modal',
+  name: 'post-delete-modal',
   props: ['entryModalDeleteConfirmVisible', 'formEntry'],
   components: {
     Modal,

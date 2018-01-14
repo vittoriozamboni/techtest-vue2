@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     applicationStatus: 'not-loaded', // not-loaded, loading, loaded
     categories: null,
     contentTypes: null,
+    posts: null,
     socialMedia: null,
     socialMediaOwners: null,
     users: null,

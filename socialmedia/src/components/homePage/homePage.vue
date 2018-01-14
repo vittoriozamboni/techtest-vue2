@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const Category = new CategoryEntity({ vm: this });
+      const Category = new CategoryEntity();
       Category.fetch();
     }
   }

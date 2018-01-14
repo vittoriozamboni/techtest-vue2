@@ -52,3 +52,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  footer.modal-card-foot {
+    justify-content: flex-end;
+  }
+</style>
