@@ -6,7 +6,7 @@
     <h1 slot="title">Manage category</h1>
     <div slot="body">
 
-      <div v-if="categoryEdit.id" class="title is-5" >Edit Category (id: {{ categoryEdit.id }})</div>
+      <div v-if="formEntry.id" class="title is-5" >Edit Category (id: {{ formEntry.id }})</div>
       <div v-else class="title is-5" >Add Category</div>
 
       <div class="field is-horizontal">
@@ -17,7 +17,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="input is-small" v-model="categoryEdit.name" type="text" placeholder="Category name">
+              <input class="input is-small" v-model="formEntry.name" type="text" placeholder="Category name">
             </div>
           </div>
         </div>
@@ -26,21 +26,21 @@
 
     </div>
     <div slot="footer">
-      <button class="button is-success" @click="saveCategory">Save changes</button>
-      <button class="button" @click="hideModal">Cancel</button>
+      <button class="button is-success" @click="saveEntry">Save changes</button>
+      <button class="button" @click="hideModal()">Cancel</button>
     </div>
   </modal>
 </template>
 
 <script>
 
-import { CategoryEntity as Entity } from '@/models/category';
+import { CategoryEntity as EntityClass } from '@/models/category';
 import Modal from '@/components/modal';
 
 
 export default {
   name: 'category-edit-modal',
-  props: ['showCategoryModal', 'categoryEdit'],
+  props: ['showCategoryModal', 'formEntry'],
   components: {
     Modal,
   },
@@ -52,10 +52,10 @@ export default {
     hideModal: function (fetchData) {
       this.$emit('hideCategoryModal', { fetchData });
     },
-    saveCategory: function () {
-      const Category = new Entity({ vm: this });
+    saveEntry: function () {
+      const entity = new EntityClass({ vm: this });
 
-      Category.save(this.categoryEdit, response => {
+      entity.save(this.formEntry, response => {
         this.hideModal(true);
       }, response => {
         this.hideModal();

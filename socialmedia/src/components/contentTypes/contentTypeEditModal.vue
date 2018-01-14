@@ -6,7 +6,7 @@
     <h1 slot="title">Manage Content Type</h1>
     <div slot="body">
 
-      <div v-if="contentTypeEdit.id" class="title is-5" >Edit Content Type (id: {{ contentTypeEdit.id }})</div>
+      <div v-if="formEntry.id" class="title is-5" >Edit Content Type (id: {{ formEntry.id }})</div>
       <div v-else class="title is-5" >Add Content Type</div>
 
       <div class="field is-horizontal">
@@ -17,7 +17,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="input is-small" v-model="contentTypeEdit.name" type="text" placeholder="Content Type name">
+              <input class="input is-small" v-model="formEntry.name" type="text" placeholder="Content Type name">
             </div>
           </div>
         </div>
@@ -26,21 +26,21 @@
 
     </div>
     <div slot="footer">
-      <button class="button is-success" @click="saveContentType">Save changes</button>
-      <button class="button" @click="hideModal">Cancel</button>
+      <button class="button is-success" @click="saveEntry">Save changes</button>
+      <button class="button" @click="hideModal()">Cancel</button>
     </div>
   </modal>
 </template>
 
 <script>
 
-import { ContentTypeEntity as Entity } from '@/models/contentType';
+import { ContentTypeEntity as EntityClass } from '@/models/contentType';
 import Modal from '@/components/modal';
 
 
 export default {
   name: 'content-type-edit-modal',
-  props: ['showContentTypeModal', 'contentTypeEdit'],
+  props: ['showContentTypeModal', 'formEntry'],
   components: {
     Modal,
   },
@@ -52,10 +52,10 @@ export default {
     hideModal: function (fetchData) {
       this.$emit('hideContentTypeModal', { fetchData });
     },
-    saveContentType: function () {
-      const ContentType = new Entity({ vm: this });
+    saveEntry: function () {
+      const entity = new EntityClass({ vm: this });
 
-      ContentType.save(this.contentTypeEdit, response => {
+      entity.save(this.formEntry, response => {
         this.hideModal(true);
       }, response => {
         this.hideModal();

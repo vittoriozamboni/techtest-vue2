@@ -2,11 +2,11 @@
   <div class="container">
     <page-header title="Categories">
       <div slot="actions">
-        <a class="button is-small is-success" @click="addCategory()">Add category</a>
+        <a class="button is-small is-success" @click="addEntry()">Add category</a>
       </div>
     </page-header>
 
-    <table class="table table-admin is-bordered is-striped is-hoverable is-fullwidth">
+    <table class="table table-admin is-striped is-hoverable is-fullwidth is-narrow">
       <thead>
         <tr>
           <th>ID</th>
@@ -15,17 +15,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="category in categories" :key="category.id">
-          <td>{{ category.id }}</td>
-          <td>{{ category.name }}</td>
+        <tr v-for="entry in entries" :key="entry.id">
+          <td>{{ entry.id }}</td>
+          <td>{{ entry.name }}</td>
           <td>
             <a class="button is-small is-primary is-outlined"
-              @click="editCategory(category)"
+              @click="editEntry(entry)"
             >
               <i class="fa fa-edit"></i>
             </a>
             <a class="button is-small is-danger is-outlined"
-              @click="deleteCategory(category)"
+              @click="deleteEntry(entry)"
             >
               <i class="fa fa-times"></i>
             </a>
@@ -34,15 +34,17 @@
       </tbody>
     </table>
 
+    <p>{{ entriesCount }} total entries</p>
+
     <category-edit-modal
       v-bind:showCategoryModal="showCategoryModal"
-      v-bind:categoryEdit="categoryEdit"
+      v-bind:formEntry="formEntry"
       v-on:hideCategoryModal="hideCategoryModal"
     ></category-edit-modal>
 
     <category-delete-modal
       v-bind:showCategoryDeleteConfirmModal="showCategoryDeleteConfirmModal"
-      v-bind:categoryEdit="categoryEdit"
+      v-bind:formEntry="formEntry"
       v-on:hideCategoryDeleteConfirmModal="hideCategoryDeleteConfirmModal"
     ></category-delete-modal>
 
@@ -51,7 +53,7 @@
 
 <script>
 
-import { CategoryEntity as Entity } from '@/models/category';
+import { CategoryEntity as EntityClass } from '@/models/category';
 import pageHeader from '@/components/administration/pageHeader';
 import { FormUtils } from '@/components/administration/utils';
 
@@ -64,7 +66,7 @@ export default {
     return {
       showCategoryModal: false,
       showCategoryDeleteConfirmModal: false,
-      categoryEdit: () => {},
+      formEntry: () => {},
     };
   },
   components: {
@@ -78,39 +80,38 @@ export default {
     }
   },
   computed: {
-    categories: function () { return this.$store.state.categories },
-    categoriesCount: function () { return this.$store.getters.categoriesCount },
+    entries: function () { return this.$store.state.categories },
+    entriesCount: function () { return this.entries ? this.entries.length : 0 },
   },
   methods: {
     fetchData () {
-      const Category = new Entity({ vm: this });
+      const entity = new EntityClass({ vm: this });
 
-      Category.fetch();
+      entity.fetch();
     },
     // ADD / EDIT
-    addCategory: function () {
-      this.editCategory();
+    addEntry: function () {
+      this.editEntry();
     },
-    editCategory: function (category) {
+    editEntry: function (entry) {
       FormUtils.editEntry(this, {
-        entry: category,
-        formVariableName: 'categoryEdit',
-        emptyEntry: Entity.emptyEntry()
+        entry: entry,
+        emptyEntry: EntityClass.emptyEntry()
       });
       this.showCategoryModal = true;
     },
     hideCategoryModal: function ({ fetchData }) {
       this.showCategoryModal = false;
-      FormUtils.closeModalForm(this, { formVariableName: 'categoryEdit', fetchData });
+      FormUtils.closeModalForm(this, { fetchData });
     },
     // DELETE
-    deleteCategory: function (category) {
+    deleteEntry: function (entry) {
       this.showCategoryDeleteConfirmModal = true;
-      this.categoryEdit = Object.assign({}, category);
+      this.formEntry = Object.assign({}, entry);
     },
     hideCategoryDeleteConfirmModal: function ({ fetchData }) {
       this.showCategoryDeleteConfirmModal = false;
-      FormUtils.closeModalForm(this, { formVariableName: 'categoryEdit', fetchData });
+      FormUtils.closeModalForm(this, { fetchData });
     }
   }
 };

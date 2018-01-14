@@ -2,11 +2,11 @@
   <div class="container">
     <page-header title="Content Types">
       <div slot="actions">
-        <a class="button is-small is-success" @click="addContentType()">Add content type</a>
+        <a class="button is-small is-success" @click="addEntry()">Add content type</a>
       </div>
     </page-header>
 
-    <table class="table table-admin is-bordered is-striped is-hoverable is-fullwidth">
+    <table class="table table-admin is-striped is-hoverable is-fullwidth is-narrow">
       <thead>
         <tr>
           <th>ID</th>
@@ -15,17 +15,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="contentType in contentTypes" :key="contentType.id">
-          <td>{{ contentType.id }}</td>
-          <td>{{ contentType.name }}</td>
+        <tr v-for="entry in entries" :key="entry.id">
+          <td>{{ entry.id }}</td>
+          <td>{{ entry.name }}</td>
           <td>
             <a class="button is-small is-primary is-outlined"
-              @click="editContentType(contentType)"
+              @click="editEntry(entry)"
             >
               <i class="fa fa-edit"></i>
             </a>
             <a class="button is-small is-danger is-outlined"
-              @click="deleteContentType(contentType)"
+              @click="deleteEntry(entry)"
             >
               <i class="fa fa-times"></i>
             </a>
@@ -34,15 +34,17 @@
       </tbody>
     </table>
 
+    <p>{{ entriesCount }} total entries</p>
+
     <content-type-edit-modal
       v-bind:showContentTypeModal="showContentTypeModal"
-      v-bind:contentTypeEdit="contentTypeEdit"
+      v-bind:formEntry="formEntry"
       v-on:hideContentTypeModal="hideContentTypeModal"
     ></content-type-edit-modal>
 
     <content-type-delete-modal
       v-bind:showContentTypeDeleteConfirmModal="showContentTypeDeleteConfirmModal"
-      v-bind:contentTypeEdit="contentTypeEdit"
+      v-bind:formEntry="formEntry"
       v-on:hideContentTypeDeleteConfirmModal="hideContentTypeDeleteConfirmModal"
     ></content-type-delete-modal>
 
@@ -52,7 +54,7 @@
 <script>
 
 
-import { ContentTypeEntity as Entity } from '@/models/contentType';
+import { ContentTypeEntity as EntityClass } from '@/models/contentType';
 import pageHeader from '@/components/administration/pageHeader';
 import { FormUtils } from '@/components/administration/utils';
 
@@ -65,7 +67,7 @@ export default {
     return {
       showContentTypeModal: false,
       showContentTypeDeleteConfirmModal: false,
-      contentTypeEdit: () => {},
+      formEntry: () => {},
     };
   },
   components: {
@@ -79,39 +81,35 @@ export default {
     }
   },
   computed: {
-    contentTypes: function () { return this.$store.state.contentTypes },
-    contentTypesCount: function () { return this.$store.getters.contentTypesCount },
+    entries: function () { return this.$store.state.contentTypes },
+    entriesCount: function () { return this.entries ? this.entries.length : 0 },
   },
   methods: {
     fetchData () {
-      const ContentType = new Entity({ vm: this });
+      const entity = new EntityClass({ vm: this });
 
-      ContentType.fetch();
+      entity.fetch();
     },
     // ADD / EDIT
-    addContentType: function () {
-      this.editContentType();
+    addEntry: function () {
+      this.editEntry();
     },
-    editContentType: function (contentType) {
-      FormUtils.editEntry(this, {
-        entry: contentType,
-        formVariableName: 'contentTypeEdit',
-        emptyEntry: Entity.emptyEntry()
-      });
+    editEntry: function (contentType) {
+      FormUtils.editEntry(this, { entry: contentType, emptyEntry: EntityClass.emptyEntry() });
       this.showContentTypeModal = true;
     },
     hideContentTypeModal: function ({ fetchData }) {
       this.showContentTypeModal = false;
-      FormUtils.closeModalForm(this, { formVariableName: 'contentTypeEdit', fetchData });
+      FormUtils.closeModalForm(this, { fetchData });
     },
     // DELETE
-    deleteContentType: function (contentType) {
+    deleteEntry: function (contentType) {
       this.showContentTypeDeleteConfirmModal = true;
-      this.contentTypeEdit = Object.assign({}, contentType);
+      this.formEntry = Object.assign({}, contentType);
     },
     hideContentTypeDeleteConfirmModal: function ({ fetchData }) {
       this.showContentTypeDeleteConfirmModal = false;
-      FormUtils.closeModalForm(this, { formVariableName: 'contentTypeEdit', fetchData });
+      FormUtils.closeModalForm(this, { fetchData });
     }
   }
 };
