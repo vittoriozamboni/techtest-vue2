@@ -8,7 +8,7 @@
       </div>
       <div class="level-right">
         <div class="level-item">
-          <a class="button is-small is-success">Add category</a>
+          <a class="button is-small is-success" @click="addCategory()">Add category</a>
         </div>
       </div>
     </nav>
@@ -25,10 +25,34 @@
         <tr v-for="category in categories" :key="category.id">
           <td>{{ category.id }}</td>
           <td>{{ category.name }}</td>
-          <td><a class="button is-small is-primary is-outlined"><i class="fa fa-edit"></i></a></td>
+          <td>
+            <a class="button is-small is-primary is-outlined"
+              @click="editCategory(category)"
+            >
+              <i class="fa fa-edit"></i>
+            </a>
+            <a class="button is-small is-danger is-outlined"
+              @click="deleteCategory(category)"
+            >
+              <i class="fa fa-times"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
+
+    <category-edit-modal
+      v-bind:showCategoryModal="showCategoryModal"
+      v-bind:categoryEdit="categoryEdit"
+      v-on:hideCategoryModal="hideCategoryModal"
+    ></category-edit-modal>
+
+    <category-delete-modal
+      v-bind:showCategoryDeleteConfirmModal="showCategoryDeleteConfirmModal"
+      v-bind:categoryEdit="categoryEdit"
+      v-on:hideCategoryDeleteConfirmModal="hideCategoryDeleteConfirmModal"
+    ></category-delete-modal>
+
   </div>
 </template>
 
@@ -36,9 +60,25 @@
 
 import { APPLICATION_SET_STATUS, DATA_SET_CATEGORIES } from '@/store/actionTypes';
 
+import categoryEditModal from './categoryEditModal';
+import categoryDeleteModal from './categoryDeleteModal';
+
+const EMPTY_CATEGORY = {
+  name: '',
+};
+
 export default {
   name: 'categories',
+  data () {
+    return {
+      showCategoryModal: false,
+      showCategoryDeleteConfirmModal: false,
+      categoryEdit: () => {},
+    };
+  },
   components: {
+    categoryEditModal,
+    categoryDeleteModal,
   },
   created () {
     this.fetchData();
@@ -53,7 +93,6 @@ export default {
 
       store.dispatch(APPLICATION_SET_STATUS, { status: 'loading' });
       this.$http.get('category/', { timeout: 5000 }).then(response => {
-        console.log(response);
         store.dispatch(DATA_SET_CATEGORIES, { data: response.body });
         store.dispatch(APPLICATION_SET_STATUS, { status: 'loaded' });
       }, response => {
@@ -63,6 +102,39 @@ export default {
         }
         console.error('Impossible to load data: ', response);
       });
+    },
+    // ADD / EDIT
+    addCategory: function () {
+      this.editCategory();
+    },
+    editCategory: function (category) {
+      if (category) {
+        this.categoryEdit = Object.assign({}, category);
+      } else {
+        this.categoryEdit = Object.assign({}, EMPTY_CATEGORY);
+      }
+      this.showCategoryModal = true;
+    },
+    hideCategoryModal: function ({ fetchData }) {
+      this.showCategoryModal = false;
+      this.categoryEdit = {};
+
+      if (fetchData) {
+        this.fetchData();
+      }
+    },
+    // DELETE
+    deleteCategory: function (category) {
+      this.showCategoryDeleteConfirmModal = true;
+      this.categoryEdit = Object.assign({}, category);
+    },
+    hideCategoryDeleteConfirmModal: function ({ fetchData }) {
+      this.showCategoryDeleteConfirmModal = false;
+      this.categoryEdit = {};
+
+      if (fetchData) {
+        this.fetchData();
+      }
     }
   }
 };
@@ -75,13 +147,16 @@ export default {
       width: 50px;
     }
     th:last-of-type {
-      width: 50px;
+      width: 100px;
     }
   }
   tbody {
     tr {
       td:first-of-type {
         text-align: right;
+      }
+      td:last-of-type {
+        text-align: center;
       }
     }
   }
