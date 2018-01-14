@@ -14,6 +14,7 @@ const store = new Vuex.Store({
     contentTypes: null,
     socialMedia: null,
     socialMediaOwners: null,
+    users: null,
   },
   getters,
   mutations,

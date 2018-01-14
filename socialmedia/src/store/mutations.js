@@ -18,5 +18,8 @@ export default {
   },
   [mutationTypes.DATA_SET_SOCIAL_MEDIA_OWNERS]: function (state, payload) {
     state.socialMediaOwners = payload.data;
+  },
+  [mutationTypes.DATA_SET_USERS]: function (state, payload) {
+    state.users = payload.data;
   }
 };

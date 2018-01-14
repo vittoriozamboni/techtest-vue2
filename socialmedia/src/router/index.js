@@ -5,6 +5,7 @@ import Categories from '@/components/categories/categories';
 import ContentTypes from '@/components/contentTypes/contentTypes';
 import SocialMedia from '@/components/socialMedia/socialMedia';
 import SocialMediaOwners from '@/components/socialMediaOwners/socialMediaOwners';
+import Users from '@/components/users/users';
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/social-media-owners',
       name: 'socialMediaOwners',
       component: SocialMediaOwners
+    },
+    {
+      path: '/users',
+      name: 'users',
+      component: Users
     }
   ]
 });

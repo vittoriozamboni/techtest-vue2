@@ -17,5 +17,8 @@ export default {
   },
   [actionTypes.DATA_SET_SOCIAL_MEDIA_OWNERS]: function ({ commit }, payload) {
     commit(mutationTypes.DATA_SET_SOCIAL_MEDIA_OWNERS, payload);
+  },
+  [actionTypes.DATA_SET_USERS]: function ({ commit }, payload) {
+    commit(mutationTypes.DATA_SET_USERS, payload);
   }
 };

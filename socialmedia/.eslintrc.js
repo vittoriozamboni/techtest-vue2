@@ -29,7 +29,8 @@ module.exports = {
     'indent': ['warn', 2, {'SwitchCase': 1}],
     // comma allowed if parenthesis is on a new line
     'comma-dangle': ['error', 'only-multiline'],
-
+    // camel case in object properties
+    'camelcase': ['error', {properties: 'never'}],
     // VUE
     // force kebab case (my-component)
     'vue/name-property-casing': ['error', 'kebab-case'],
