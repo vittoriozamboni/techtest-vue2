@@ -37,15 +37,15 @@
     <p>{{ entriesCount }} total entries</p>
 
     <category-edit-modal
-      v-bind:showCategoryModal="showCategoryModal"
+      v-bind:entryModalFormVisible="entryModalFormVisible"
       v-bind:formEntry="formEntry"
-      v-on:hideCategoryModal="hideCategoryModal"
+      v-on:hideEntryFormModal="hideEntryFormModal"
     ></category-edit-modal>
 
     <category-delete-modal
-      v-bind:showCategoryDeleteConfirmModal="showCategoryDeleteConfirmModal"
+      v-bind:entryModalDeleteConfirmVisible="entryModalDeleteConfirmVisible"
       v-bind:formEntry="formEntry"
-      v-on:hideCategoryDeleteConfirmModal="hideCategoryDeleteConfirmModal"
+      v-on:hideEntryDeleteConfirmModal="hideEntryDeleteConfirmModal"
     ></category-delete-modal>
 
   </div>
@@ -64,8 +64,8 @@ export default {
   name: 'categories',
   data () {
     return {
-      showCategoryModal: false,
-      showCategoryDeleteConfirmModal: false,
+      entryModalFormVisible: false,
+      entryModalDeleteConfirmVisible: false,
       formEntry: () => {},
     };
   },
@@ -85,9 +85,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const entity = new EntityClass({ vm: this });
-
-      entity.fetch();
+      new EntityClass({ vm: this }).fetch();
     },
     // ADD / EDIT
     addEntry: function () {
@@ -98,19 +96,19 @@ export default {
         entry: entry,
         emptyEntry: EntityClass.emptyEntry()
       });
-      this.showCategoryModal = true;
+      this.entryModalFormVisible = true;
     },
-    hideCategoryModal: function ({ fetchData }) {
-      this.showCategoryModal = false;
+    hideEntryFormModal: function ({ fetchData }) {
+      this.entryModalFormVisible = false;
       FormUtils.closeModalForm(this, { fetchData });
     },
     // DELETE
     deleteEntry: function (entry) {
-      this.showCategoryDeleteConfirmModal = true;
+      this.entryModalDeleteConfirmVisible = true;
       this.formEntry = Object.assign({}, entry);
     },
-    hideCategoryDeleteConfirmModal: function ({ fetchData }) {
-      this.showCategoryDeleteConfirmModal = false;
+    hideEntryDeleteConfirmModal: function ({ fetchData }) {
+      this.entryModalDeleteConfirmVisible = false;
       FormUtils.closeModalForm(this, { fetchData });
     }
   }

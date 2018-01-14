@@ -1,15 +1,19 @@
 <template>
   <modal class="modal content-type-delete-confirm"
-    v-bind:show="showContentTypeDeleteConfirmModal"
+    v-bind:show="entryModalDeleteConfirmVisible"
     v-on:closeModal="hideModal"
   >
-    <h1 slot="title">Manage Content Type</h1>
+    <h1 slot="title">Delete Content Type</h1>
     <div slot="body">
-      <p class="title is-5">Are you sure to delete the content type "{{ formEntry.name }}"?</p>
-      <p class="subtitle is-6">This operation can't be undone.</p>
+      <article class="message is-danger">
+        <div class="message-body">
+          <p>Are you sure to delete the content type "{{ formEntry.name }}"?</p>
+          <p class="is-size-7">This operation can't be undone.</p>
+        </div>
+      </article>
     </div>
     <div slot="footer">
-      <button class="button is-danger" @click="deleteContentTypeConfirm">Delete</button>
+      <button class="button is-danger" @click="deleteEntryConfirm">Delete</button>
       <button class="button" @click="hideModal()">Cancel</button>
     </div>
   </modal>
@@ -22,7 +26,7 @@ import Modal from '@/components/modal';
 
 export default {
   name: 'content-type-delete-modal',
-  props: ['showContentTypeDeleteConfirmModal', 'formEntry'],
+  props: ['entryModalDeleteConfirmVisible', 'formEntry'],
   components: {
     Modal,
   },
@@ -32,9 +36,9 @@ export default {
   },
   methods: {
     hideModal: function (fetchData) {
-      this.$emit('hideContentTypeDeleteConfirmModal', { fetchData });
+      this.$emit('hideEntryDeleteConfirmModal', { fetchData });
     },
-    deleteContentTypeConfirm: function () {
+    deleteEntryConfirm: function () {
       const entity = new EntityClass({ vm: this });
 
       entity.delete(this.formEntry.id, response => {

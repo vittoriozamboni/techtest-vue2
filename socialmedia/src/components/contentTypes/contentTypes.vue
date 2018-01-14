@@ -19,14 +19,10 @@
           <td>{{ entry.id }}</td>
           <td>{{ entry.name }}</td>
           <td>
-            <a class="button is-small is-primary is-outlined"
-              @click="editEntry(entry)"
-            >
+            <a class="button is-small is-primary is-outlined" @click="editEntry(entry)">
               <i class="fa fa-edit"></i>
             </a>
-            <a class="button is-small is-danger is-outlined"
-              @click="deleteEntry(entry)"
-            >
+            <a class="button is-small is-danger is-outlined" @click="deleteEntry(entry)">
               <i class="fa fa-times"></i>
             </a>
           </td>
@@ -37,15 +33,15 @@
     <p>{{ entriesCount }} total entries</p>
 
     <content-type-edit-modal
-      v-bind:showContentTypeModal="showContentTypeModal"
+      v-bind:entryModalFormVisible="entryModalFormVisible"
       v-bind:formEntry="formEntry"
-      v-on:hideContentTypeModal="hideContentTypeModal"
+      v-on:hideEntryFormModal="hideEntryFormModal"
     ></content-type-edit-modal>
 
     <content-type-delete-modal
-      v-bind:showContentTypeDeleteConfirmModal="showContentTypeDeleteConfirmModal"
+      v-bind:entryModalDeleteConfirmVisible="entryModalDeleteConfirmVisible"
       v-bind:formEntry="formEntry"
-      v-on:hideContentTypeDeleteConfirmModal="hideContentTypeDeleteConfirmModal"
+      v-on:hideEntryDeleteConfirmModal="hideEntryDeleteConfirmModal"
     ></content-type-delete-modal>
 
   </div>
@@ -65,8 +61,8 @@ export default {
   name: 'content-types',
   data () {
     return {
-      showContentTypeModal: false,
-      showContentTypeDeleteConfirmModal: false,
+      entryModalFormVisible: false,
+      entryModalDeleteConfirmVisible: false,
       formEntry: () => {},
     };
   },
@@ -86,9 +82,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const entity = new EntityClass({ vm: this });
-
-      entity.fetch();
+      new EntityClass({ vm: this }).fetch();
     },
     // ADD / EDIT
     addEntry: function () {
@@ -96,19 +90,19 @@ export default {
     },
     editEntry: function (contentType) {
       FormUtils.editEntry(this, { entry: contentType, emptyEntry: EntityClass.emptyEntry() });
-      this.showContentTypeModal = true;
+      this.entryModalFormVisible = true;
     },
-    hideContentTypeModal: function ({ fetchData }) {
-      this.showContentTypeModal = false;
+    hideEntryFormModal: function ({ fetchData }) {
+      this.entryModalFormVisible = false;
       FormUtils.closeModalForm(this, { fetchData });
     },
     // DELETE
     deleteEntry: function (contentType) {
-      this.showContentTypeDeleteConfirmModal = true;
+      this.entryModalDeleteConfirmVisible = true;
       this.formEntry = Object.assign({}, contentType);
     },
-    hideContentTypeDeleteConfirmModal: function ({ fetchData }) {
-      this.showContentTypeDeleteConfirmModal = false;
+    hideEntryDeleteConfirmModal: function ({ fetchData }) {
+      this.entryModalDeleteConfirmVisible = false;
       FormUtils.closeModalForm(this, { fetchData });
     }
   }

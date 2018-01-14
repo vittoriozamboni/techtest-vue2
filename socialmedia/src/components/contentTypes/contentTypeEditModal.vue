@@ -1,32 +1,20 @@
 <template>
   <modal class="modal content-type-form"
-    v-bind:show="showContentTypeModal"
+    v-bind:show="entryModalFormVisible"
     v-on:closeModal="hideModal"
   >
     <h1 slot="title">Manage Content Type</h1>
     <div slot="body">
 
-      <div v-if="formEntry.id" class="title is-5" >Edit Content Type (id: {{ formEntry.id }})</div>
-      <div v-else class="title is-5" >Add Content Type</div>
+      <form-title entityName="Content Type" :entryId="formEntry.id"></form-title>
 
-      <div class="field is-horizontal">
-
-        <div class="field-label is-small">
-          <label class="label">Name</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <div class="control">
-              <input class="input is-small" v-model="formEntry.name" type="text" placeholder="Content Type name">
-            </div>
-          </div>
-        </div>
-
-      </div>
+      <form-field label="Name">
+        <input slot="field" class="input is-small" v-model="formEntry.name" type="text" placeholder="Name of the entry">
+      </form-field>
 
     </div>
     <div slot="footer">
-      <button class="button is-success" @click="saveEntry">Save changes</button>
+      <button class="button is-success" @click="saveEntry()">Save changes</button>
       <button class="button" @click="hideModal()">Cancel</button>
     </div>
   </modal>
@@ -34,15 +22,19 @@
 
 <script>
 
+import FormField from '@/components/administration/formField';
+import FormTitle from '@/components/administration/formTitle';
 import { ContentTypeEntity as EntityClass } from '@/models/contentType';
 import Modal from '@/components/modal';
 
 
 export default {
   name: 'content-type-edit-modal',
-  props: ['showContentTypeModal', 'formEntry'],
+  props: ['entryModalFormVisible', 'formEntry'],
   components: {
     Modal,
+    FormField,
+    FormTitle
   },
   data () {
     return {
@@ -50,11 +42,10 @@ export default {
   },
   methods: {
     hideModal: function (fetchData) {
-      this.$emit('hideContentTypeModal', { fetchData });
+      this.$emit('hideEntryFormModal', { fetchData });
     },
     saveEntry: function () {
       const entity = new EntityClass({ vm: this });
-
       entity.save(this.formEntry, response => {
         this.hideModal(true);
       }, response => {
