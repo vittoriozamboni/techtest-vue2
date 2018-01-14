@@ -34,7 +34,7 @@
 
 <script>
 
-import CategoryEntity from '@/models/category';
+import { CategoryEntity as Entity } from '@/models/category';
 import Modal from '@/components/modal';
 
 
@@ -53,7 +53,7 @@ export default {
       this.$emit('hideCategoryModal', { fetchData });
     },
     saveCategory: function () {
-      const Category = new CategoryEntity({ vm: this });
+      const Category = new Entity({ vm: this });
 
       Category.save(this.categoryEdit, response => {
         this.hideModal(true);

@@ -1,19 +1,12 @@
 <template>
   <div class="container">
-    <nav class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">Categories</h1>
-        </div>
+    <page-header title="Categories">
+      <div slot="actions">
+        <a class="button is-small is-success" @click="addCategory()">Add category</a>
       </div>
-      <div class="level-right">
-        <div class="level-item">
-          <a class="button is-small is-success" @click="addCategory()">Add category</a>
-        </div>
-      </div>
-    </nav>
+    </page-header>
 
-    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    <table class="table table-admin is-bordered is-striped is-hoverable is-fullwidth">
       <thead>
         <tr>
           <th>ID</th>
@@ -58,13 +51,12 @@
 
 <script>
 
-import CategoryEntity from '@/models/category';
+import { CategoryEntity as Entity } from '@/models/category';
+import pageHeader from '@/components/administration/pageHeader';
+import { FormUtils } from '@/components/administration/utils';
+
 import categoryEditModal from './categoryEditModal';
 import categoryDeleteModal from './categoryDeleteModal';
-
-const EMPTY_CATEGORY = {
-  name: '',
-};
 
 export default {
   name: 'categories',
@@ -76,6 +68,7 @@ export default {
     };
   },
   components: {
+    pageHeader,
     categoryEditModal,
     categoryDeleteModal,
   },
@@ -90,7 +83,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const Category = new CategoryEntity({ vm: this });
+      const Category = new Entity({ vm: this });
 
       Category.fetch();
     },
@@ -99,20 +92,16 @@ export default {
       this.editCategory();
     },
     editCategory: function (category) {
-      if (category) {
-        this.categoryEdit = Object.assign({}, category);
-      } else {
-        this.categoryEdit = Object.assign({}, EMPTY_CATEGORY);
-      }
+      FormUtils.editEntry(this, {
+        entry: category,
+        formVariableName: 'categoryEdit',
+        emptyEntry: Entity.emptyEntry()
+      });
       this.showCategoryModal = true;
     },
     hideCategoryModal: function ({ fetchData }) {
       this.showCategoryModal = false;
-      this.categoryEdit = {};
-
-      if (fetchData) {
-        this.fetchData();
-      }
+      FormUtils.closeModalForm(this, { formVariableName: 'categoryEdit', fetchData });
     },
     // DELETE
     deleteCategory: function (category) {
@@ -121,35 +110,8 @@ export default {
     },
     hideCategoryDeleteConfirmModal: function ({ fetchData }) {
       this.showCategoryDeleteConfirmModal = false;
-      this.categoryEdit = {};
-
-      if (fetchData) {
-        this.fetchData();
-      }
+      FormUtils.closeModalForm(this, { formVariableName: 'categoryEdit', fetchData });
     }
   }
 };
 </script>
-
-<style lang="scss">
-.table {
-  thead {
-    th:first-of-type {
-      width: 50px;
-    }
-    th:last-of-type {
-      width: 100px;
-    }
-  }
-  tbody {
-    tr {
-      td:first-of-type {
-        text-align: right;
-      }
-      td:last-of-type {
-        text-align: center;
-      }
-    }
-  }
-}
-</style>

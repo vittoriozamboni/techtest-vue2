@@ -15,7 +15,7 @@
       <div class="navbar-start">
         <router-link class="navbar-item" to="/">Home</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="/">
+          <a class="navbar-link">
             Administration
           </a>
           <div class="navbar-dropdown">

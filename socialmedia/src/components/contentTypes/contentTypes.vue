@@ -1,19 +1,12 @@
 <template>
   <div class="container">
-    <nav class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">Content Types</h1>
-        </div>
+    <page-header title="Content Types">
+      <div slot="actions">
+        <a class="button is-small is-success" @click="addContentType()">Add content type</a>
       </div>
-      <div class="level-right">
-        <div class="level-item">
-          <a class="button is-small is-success" @click="addContentType()">Add content type</a>
-        </div>
-      </div>
-    </nav>
+    </page-header>
 
-    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+    <table class="table table-admin is-bordered is-striped is-hoverable is-fullwidth">
       <thead>
         <tr>
           <th>ID</th>
@@ -58,13 +51,13 @@
 
 <script>
 
-import ContentTypeEntity from '@/models/contentType';
+
+import { ContentTypeEntity as Entity } from '@/models/contentType';
+import pageHeader from '@/components/administration/pageHeader';
+import { FormUtils } from '@/components/administration/utils';
+
 import contentTypeEditModal from './contentTypeEditModal';
 import contentTypeDeleteModal from './contentTypeDeleteModal';
-
-const EMPTY_CATEGORY = {
-  name: '',
-};
 
 export default {
   name: 'content-types',
@@ -76,8 +69,9 @@ export default {
     };
   },
   components: {
+    pageHeader,
     contentTypeEditModal,
-    contentTypeDeleteModal,
+    contentTypeDeleteModal
   },
   created () {
     if (this.$store.state.contentTypes === null) {
@@ -90,7 +84,7 @@ export default {
   },
   methods: {
     fetchData () {
-      const ContentType = new ContentTypeEntity({ vm: this });
+      const ContentType = new Entity({ vm: this });
 
       ContentType.fetch();
     },
@@ -99,20 +93,16 @@ export default {
       this.editContentType();
     },
     editContentType: function (contentType) {
-      if (contentType) {
-        this.contentTypeEdit = Object.assign({}, contentType);
-      } else {
-        this.contentTypeEdit = Object.assign({}, EMPTY_CATEGORY);
-      }
+      FormUtils.editEntry(this, {
+        entry: contentType,
+        formVariableName: 'contentTypeEdit',
+        emptyEntry: Entity.emptyEntry()
+      });
       this.showContentTypeModal = true;
     },
     hideContentTypeModal: function ({ fetchData }) {
       this.showContentTypeModal = false;
-      this.contentTypeEdit = {};
-
-      if (fetchData) {
-        this.fetchData();
-      }
+      FormUtils.closeModalForm(this, { formVariableName: 'contentTypeEdit', fetchData });
     },
     // DELETE
     deleteContentType: function (contentType) {
@@ -121,35 +111,8 @@ export default {
     },
     hideContentTypeDeleteConfirmModal: function ({ fetchData }) {
       this.showContentTypeDeleteConfirmModal = false;
-      this.contentTypeEdit = {};
-
-      if (fetchData) {
-        this.fetchData();
-      }
+      FormUtils.closeModalForm(this, { formVariableName: 'contentTypeEdit', fetchData });
     }
   }
 };
 </script>
-
-<style lang="scss">
-.table {
-  thead {
-    th:first-of-type {
-      width: 50px;
-    }
-    th:last-of-type {
-      width: 100px;
-    }
-  }
-  tbody {
-    tr {
-      td:first-of-type {
-        text-align: right;
-      }
-      td:last-of-type {
-        text-align: center;
-      }
-    }
-  }
-}
-</style>

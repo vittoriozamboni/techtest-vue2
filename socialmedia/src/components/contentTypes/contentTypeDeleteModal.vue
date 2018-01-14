@@ -17,7 +17,7 @@
 
 <script>
 
-import ContentTypeEntity from '@/models/contentType';
+import { ContentTypeEntity as Entity } from '@/models/contentType';
 import Modal from '@/components/modal';
 
 export default {
@@ -35,7 +35,7 @@ export default {
       this.$emit('hideContentTypeDeleteConfirmModal', { fetchData });
     },
     deleteContentTypeConfirm: function () {
-      const ContentType = new ContentTypeEntity({ vm: this });
+      const ContentType = new Entity({ vm: this });
 
       ContentType.delete(this.contentTypeEdit.id, response => {
         this.hideModal(true);

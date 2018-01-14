@@ -34,7 +34,7 @@
 
 <script>
 
-import ContentTypeEntity from '@/models/contentType';
+import { ContentTypeEntity as Entity } from '@/models/contentType';
 import Modal from '@/components/modal';
 
 
@@ -53,7 +53,7 @@ export default {
       this.$emit('hideContentTypeModal', { fetchData });
     },
     saveContentType: function () {
-      const ContentType = new ContentTypeEntity({ vm: this });
+      const ContentType = new Entity({ vm: this });
 
       ContentType.save(this.contentTypeEdit, response => {
         this.hideModal(true);

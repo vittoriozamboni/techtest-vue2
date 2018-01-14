@@ -13,7 +13,7 @@
 
 <script>
 
-import CategoryEntity from '@/models/category';
+import { CategoryEntity } from '@/models/category';
 
 import homePageCategories from './homePageCategories';
 

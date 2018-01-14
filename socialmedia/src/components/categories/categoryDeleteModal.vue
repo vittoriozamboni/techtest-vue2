@@ -17,7 +17,7 @@
 
 <script>
 
-import CategoryEntity from '@/models/category';
+import { CategoryEntity as Entity } from '@/models/category';
 import Modal from '@/components/modal';
 
 export default {
@@ -35,7 +35,7 @@ export default {
       this.$emit('hideCategoryDeleteConfirmModal', { fetchData });
     },
     deleteCategoryConfirm: function () {
-      const Category = new CategoryEntity({ vm: this });
+      const Category = new Entity({ vm: this });
 
       Category.delete(this.categoryEdit.id, response => {
         this.hideModal(true);
