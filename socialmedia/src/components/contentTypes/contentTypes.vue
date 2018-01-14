@@ -2,7 +2,10 @@
   <div class="container">
     <page-header title="Content Types">
       <div slot="actions">
-        <a class="button is-small is-success" @click="addEntry()">Add content type</a>
+        <a class="button is-small is-success" @click="addEntry()">
+          <span class="icon"><i class="fa fa-plus"></i></span>
+          <span>Add</span>
+        </a>
       </div>
     </page-header>
 
