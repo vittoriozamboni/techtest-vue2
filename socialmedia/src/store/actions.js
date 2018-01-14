@@ -8,5 +8,8 @@ export default {
   },
   [actionTypes.DATA_SET_CATEGORIES]: function ({ commit }, payload) {
     commit(mutationTypes.DATA_SET_CATEGORIES, payload);
+  },
+  [actionTypes.DATA_SET_CONTENT_TYPES]: function ({ commit }, payload) {
+    commit(mutationTypes.DATA_SET_CONTENT_TYPES, payload);
   }
 };

@@ -16,10 +16,11 @@
         <router-link class="navbar-item" to="/">Home</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link" href="/">
-            Sections
+            Administration
           </a>
           <div class="navbar-dropdown">
             <router-link class="navbar-item" to="/categories">Categories</router-link>
+            <router-link class="navbar-item" to="/content-types">Content Types</router-link>
           </div>
         </div>
         <div class="navbar-item has-dropdown is-hoverable">
