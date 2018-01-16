@@ -19,7 +19,7 @@ import Modal from '@/components/modal';
 import PostDetails from '@/components/posts/postDetails';
 
 export default {
-  name: 'post-detail-modal',
+  name: 'post-details-modal',
   props: ['entryModalDetailsVisible', 'detailsEntry'],
   components: {
     Modal,
